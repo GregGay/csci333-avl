@@ -53,7 +53,6 @@ void BST<T>::remove(T v) {
     else {
 	  Node<T>* nodeToRemove = *cur;
     
-    
 	  if(nodeToRemove->getRightChild()==0 || nodeToRemove->getLeftChild()==0) {
 		cur=&((*cur)->getLeftChild());
 		delete nodeToRemove;
