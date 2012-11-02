@@ -35,6 +35,15 @@ int main() {
 
   bst->remove(15);
   bst->print();
-  //bst->remove(12);
-  //bst->print();
+  
+  cout<< endl;
+  
+  bst->remove(10);
+  bst->print();
+  
+  cout << endl;
+/*
+  bst->remove(13);
+  bst->print();
+*/
 }
