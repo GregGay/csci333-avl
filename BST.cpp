@@ -53,19 +53,16 @@ void BST<T>::remove(T v) {
     else {
 	  Node<T>* nodeToRemove = *cur;
     
-	  if(nodeToRemove->getRightChild()==0 || nodeToRemove->getLeftChild()==0) {
-		cur=&((*cur)->getLeftChild());
-		delete nodeToRemove;
+	  if(nodeToRemove->getRightChild()==0 && nodeToRemove->getLeftChild()==0) {
+		*cur=0;
 	  }
 
 	  else if(nodeToRemove->getLeftChild()==0) {
-		cur=&((*cur)->getRightChild());
-		//nodeToRemove->getRightChild();
+		*cur=(*cur)->getRightChild();
 	  }
 	  
 	  else if(nodeToRemove->getRightChild()==0) {
-		cur=&((*cur)->getLeftChild());
-		//nodeToRemove->getLeftChild();
+		*cur=(*cur)->getLeftChild();
 	  }
 	  
 	  else {    
@@ -76,8 +73,7 @@ void BST<T>::remove(T v) {
 		}
     
 		ios->setLeftChild(*nodeToRemove->getLeftChild());
-		*cur=ios;
-		//*cur=(*cur)->getRightChild();
+		*cur=(*cur)->getRightChild();
 	  }
 
 	  delete nodeToRemove; 
@@ -94,10 +90,12 @@ void BST<T>::traversalPrint(Node<T>* root) {
   if(root != 0) {
     std::cout << root->getValue() << std::endl;
     traversalPrint(root->getLeftChild());
+    //std::cout << root->getValue() << std::endl;
     traversalPrint(root->getRightChild());
+    //std::cout << root->getValue() << std::endl;
   }
 }
 
 template class BST<int>;
 template class BST<double>;
-//template class BST<std::string>;
+template class BST<std::string>;
