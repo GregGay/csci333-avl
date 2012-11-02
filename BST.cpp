@@ -45,23 +45,42 @@ void BST<T>::remove(T v) {
 		cur=&((*cur)->getRightChild());
 	  }
     }
-    if(*cur==0) return;
-
-    Node<T>* nodeToRemove = *cur;
-
-    if(nodeToRemove->getRightChild()==0 || nodeToRemove->getLeftChild()==0){
-	  cur=&((*cur)->getLeftChild());
-	  delete nodeToRemove;
+    if(*cur==0){ 
+	  return;
     }
+    else {
+	  Node<T>* nodeToRemove = *cur;
     
-    //Node<T>** iop = (*cur)->getLeftChild();
-    Node<T>* ios = (*cur)->getRightChild();
-    while(ios->getLeftChild()!=0) {
-	  ios=ios->getLeftChild();
+    
+	  if(nodeToRemove->getRightChild()==0 || nodeToRemove->getLeftChild()==0) {
+		cur=&((*cur)->getLeftChild());
+		delete nodeToRemove;
+	  }
+
+	  else if(nodeToRemove->getLeftChild()==0) {
+		cur=&((*cur)->getRightChild());
+		//nodeToRemove->getRightChild();
+	  }
+	  
+	  else if(nodeToRemove->getRightChild()==0) {
+		cur=&((*cur)->getLeftChild());
+		//nodeToRemove->getLeftChild();
+	  }
+	  
+	  else {    
+		//Node<T>** iop = (*cur)->getLeftChild();
+		Node<T>* ios = nodeToRemove->getRightChild();
+		while(ios->getLeftChild()!=0) {
+		    ios=ios->getLeftChild();
+		}
+    
+		ios->setLeftChild(*nodeToRemove->getLeftChild());
+		*cur=ios;
+		//*cur=(*cur)->getRightChild();
+	  }
+
+	  delete nodeToRemove; 
     }
-    ios->setLeftChild(*nodeToRemove->getLeftChild());
-    *cur=ios;
-    delete nodeToRemove;
 }
 
 template <typename T>
