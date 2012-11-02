@@ -36,8 +36,32 @@ void BST<T>::insert(T v) {
 
 template <typename T>
 void BST<T>::remove(T v) {
-  Node<T>* temp = new Node<T>(v);
-  root = temp;
+    Node<T>** cur=&root;
+    while(*cur != 0 && (*cur)->getValue() != v){
+	  if (v < (*cur)->getValue()) {
+		cur=&((*cur)->getLeftChild());
+	  }
+	  else {
+		cur=&((*cur)->getRightChild());
+	  }
+    }
+    if(*cur==0) return;
+
+    Node<T>* nodeToRemove = *cur;
+
+    if(nodeToRemove->getRightChild()==0 || nodeToRemove->getLeftChild()==0){
+	  cur=&((*cur)->getLeftChild());
+	  delete nodeToRemove;
+    }
+    
+    //Node<T>** iop = (*cur)->getLeftChild();
+    Node<T>* ios = (*cur)->getRightChild();
+    while(ios->getLeftChild()!=0) {
+	  ios=ios->getLeftChild();
+    }
+    ios->setLeftChild(*nodeToRemove->getLeftChild());
+    *cur=ios;
+    delete nodeToRemove;
 }
 
 template <typename T>
@@ -48,12 +72,12 @@ void BST<T>::print() {
 template <typename T>
 void BST<T>::traversalPrint(Node<T>* root) {
   if(root != 0) {
-    traversalPrint(root->getLeftChild());
     std::cout << root->getValue() << std::endl;
+    traversalPrint(root->getLeftChild());
     traversalPrint(root->getRightChild());
   }
 }
 
 template class BST<int>;
 template class BST<double>;
-template class BST<std::string>;
+//template class BST<std::string>;
