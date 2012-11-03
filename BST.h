@@ -18,7 +18,7 @@ class BST {
   void remove(T v);
   void insert(T v);
   void print();
+  void treePrint();
 };
-
 
 #endif
