@@ -1,6 +1,6 @@
 CPP = g++
 CFLAGS = -Wall -Wextra -Werror
-
+ 
 
 ttest: tree_test.cpp BST.o Node.o
 	$(CPP) $(CFLAGS) -o ttest $^
