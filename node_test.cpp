@@ -3,7 +3,7 @@
 #include <iostream>
 
 using std::string;
-
+ 
 
 int main() {
   Node<string>* ns = new Node<string>(string("hello world!"));
