@@ -60,11 +60,6 @@ void AVL<T>::insert(T v) {
 	  }
     }
     *curr = temp;
-    /*
-    while (*cn != 0 && *cn != temp) {
-	  curr=(curr==0)?root:cn;
-	  
-    }*/
 }
 /*
 template <typename T>
