@@ -4,7 +4,6 @@
 
 using std::string;
  
-
 int main() {
   Node<string>* ns = new Node<string>(string("hello world!"));
   Node<int>* ni = new Node<int>(5);
