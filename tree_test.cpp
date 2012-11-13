@@ -1,22 +1,22 @@
-#include "BST.h"
+#include "AVL.h"
 #include <iostream>
 
 using std::cout;
 using std::endl;
 
 int main() {
-  BST<int>* bst = new BST<int>();
+  AVL<int>* bst = new AVL<int>();
   
   cout << "Tree Print" << endl;
-  bst->insert(10);
-  bst->insert(5);
-  bst->insert(7);
-  bst->insert(3);
-  bst->insert(2);
-  bst->insert(15);
-  bst->insert(16);
-  bst->insert(1);
-  bst->insert(12);
+  bst->BSTInsert(10);
+  bst->BSTInsert(5);
+  bst->BSTInsert(7);
+  bst->BSTInsert(3);
+  bst->BSTInsert(2);
+  bst->BSTInsert(15);
+  bst->BSTInsert(16);
+  //bst->insert(1);
+  //bst->insert(12);
   bst->treePrint();
 
   cout << endl;
