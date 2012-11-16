@@ -53,7 +53,7 @@ void AVL<T>::insert(T v) {
 		/*if ((*curr)->getBalance() == 1 || (*curr)->getBalance() == -1) {
 		    cn = curr;
 		}*/
-		(*curr)->setBalance(((*curr)->getBalance())-1);
+		//(*curr)->setBalance(((*curr)->getBalance())-1);
 		curr=&((*curr)->getLeftChild());
 	  }
 
@@ -61,7 +61,7 @@ void AVL<T>::insert(T v) {
 		/*if ((*curr)->getBalance() == 1 || (*curr)->getBalance() == -1) {
 		    cn=curr;
 		}*/
-		(*curr)->setBalance(((*curr)->getBalance())+1);
+		//(*curr)->setBalance(((*curr)->getBalance())+1);
 		curr=&((*curr)->getRightChild());
 	  }
     }
@@ -76,7 +76,8 @@ void AVL<T>::insert(T v) {
 
     if (cn==0) {
 	  //curr=&root;
-	  R=&root;
+	  //R=&root;
+	  R=curr;
     }
     else {
 	  //Node<T>** C;
@@ -144,8 +145,8 @@ void AVL<T>::insert(T v) {
 		    }
 		    else {
 			  (*cn)->setBalance(0);
-			  //rotateRight(C);
-			  //rotateRight(cn);
+			  rotateRight(C);
+			  rotateRight(cn);
 		    }
 		    if (d2==1) {
 			  rotateLeft(C);
@@ -169,19 +170,22 @@ void AVL<T>::insert(T v) {
 	  if (v == (*curr)->getValue()) {
 		d = 0;
 		Q = &(*curr);
+		R = Q;
 	  }
 	  else if (v < (*curr)->getValue()) {
 		d = -1;
 		(*Q)->setBalance(-1);
-		Q = &((*Q)->getLeftChild());
+		R = &((*Q)->getLeftChild());
+		//Q = &((*Q)->getLeftChild());
 	  }
 	  else if (v > (*curr)->getValue()) {
 		d = 1;
 		(*Q)->setBalance(1);
-		Q = &((*Q)->getRightChild());
+		R = &((*Q)->getRightChild());
+		//Q = &((*Q)->getRightChild());
 	  }
     }
-    
+
     //(*curr)->setBalance(1); 
     //Node<T>** child = *curr;
     /*if ((*curr)->getBalance()==-1) {
