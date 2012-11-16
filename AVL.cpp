@@ -31,6 +31,8 @@ void AVL<T>::insert(T v) {
     Node<T>* temp = new Node<T>(v);
     Node<T>** cn = 0;         //A, from book example
     Node<T>** curr = &root;   //P, from book example
+    bool critNodeFound = false;
+
     //need critical node pointer
     //curr=(curr==0)?root:cn; //this is a selection operator
     //need a parent/prev pointer
@@ -47,6 +49,7 @@ void AVL<T>::insert(T v) {
     while (*curr != 0) {
 	  if ((*curr)->getBalance() != 0) {
 		cn = curr;
+		critNodeFound = true;
 	  }
 
 	  if (v < (*curr)->getValue()) {
@@ -66,7 +69,7 @@ void AVL<T>::insert(T v) {
 	  }
     }
     *curr = temp;
-    
+  
     Node<T>** R;
     Node<T>** C;
     Node<T>** B;
@@ -74,13 +77,14 @@ void AVL<T>::insert(T v) {
     int d2 = 0;
     int d3 = 0;
 
-    if (cn==0) {
+    //if (cn==0) {
+    if (!critNodeFound) {
+    cout << "hello" << endl;
 	  //curr=&root;
-	  //R=&root;
-	  R=curr;
+	  R=&root;
+	  //R=curr;
     }
     else {
-	  //Node<T>** C;
 	  if (v == (*cn)->getValue()) {
 		d1 = 0;
 		C = &(*cn);
@@ -94,9 +98,12 @@ void AVL<T>::insert(T v) {
 		C = &((*cn)->getRightChild());
 	  }
 
+	  cout << "no rotate"<<endl;
 	  if((*cn)->getBalance()!=d1) {
+	  //cout << "no rotate"<<endl;
 		(*cn)->setBalance(0);
-		R = &root;
+		//R = &root;
+		R = curr;
 	  }
 	  else {
 		if (v == (*C)->getValue()) {
@@ -112,7 +119,9 @@ void AVL<T>::insert(T v) {
 		    B = &((*C)->getRightChild());
 		}
 
+		cout << "single Rotate" <<endl;
 		if(d2 == d1) {
+		//cout << "single Rotate" <<endl;
 		    (*cn)->setBalance(0);
 		    R = B;
 		    if (d1 == -1) {
@@ -127,7 +136,7 @@ void AVL<T>::insert(T v) {
 			  d3 = 0;
 			  R = &(*B);
 		    }
-		    else if (v < (*B)->getValue()) {
+		    if (v < (*B)->getValue()) {
 			  d3 = -1;
 			  R = &((*B)->getLeftChild());
 		    }
@@ -136,17 +145,19 @@ void AVL<T>::insert(T v) {
 			  R = &((*B)->getRightChild());
 		    }
 
+		    cout << "double" << endl;
 		    if (d3 == d2) {
-			  (*cn)->setBalance(0);
+		    //cout << "doubled" << endl;
+			  //(*cn)->setBalance(0);
 			  (*C)->setBalance(d1);
 		    }
 		    else if (d3 == -d2) {
-			  (*cn)->setBalance(d2);
+			  (*C)->setBalance(d2);
 		    }
 		    else {
 			  (*cn)->setBalance(0);
-			  rotateRight(C);
-			  rotateRight(cn);
+			  //rotateRight(C);
+			  //rotateRight(cn);
 		    }
 		    if (d2==1) {
 			  rotateLeft(C);
@@ -165,74 +176,63 @@ void AVL<T>::insert(T v) {
     }
 
     int d = 0;
-    Node<T>** Q;
-    while ((*R)->getValue() != v) {
-	  if (v == (*curr)->getValue()) {
+    //cout << "R:" << (*R)->getValue() <<endl;
+    //Node<T>** Q;
+    while ((*R) != 0 && (*R)->getValue() != v) {
+	  if (v == (*R)->getValue()) {
 		d = 0;
-		Q = &(*curr);
-		R = Q;
+		R = &(*curr);
+		//R = Q;
 	  }
-	  else if (v < (*curr)->getValue()) {
+	  if (v < (*R)->getValue()) {
 		d = -1;
-		(*Q)->setBalance(-1);
-		R = &((*Q)->getLeftChild());
+		(*R)->setBalance(-1);
+		R = &((*R)->getLeftChild());
 		//Q = &((*Q)->getLeftChild());
 	  }
-	  else if (v > (*curr)->getValue()) {
+	  else if (v > (*R)->getValue()) {
 		d = 1;
-		(*Q)->setBalance(1);
-		R = &((*Q)->getRightChild());
+		(*R)->setBalance(1);
+		R = &((*R)->getRightChild());
 		//Q = &((*Q)->getRightChild());
 	  }
     }
-
-    //(*curr)->setBalance(1); 
-    //Node<T>** child = *curr;
-    /*if ((*curr)->getBalance()==-1) {
-	  //cout<<"G"<<endl;
-	  *cn->getBalance()=-1;
-	  rotateRight(cn);
-    }
-    else if ((*curr)->getBalance()==1) {
-	  //cout<<"L"<<endl;
-	  rotateLeft(cn);
-    }*/
 }
 
 template <typename T>
-void AVL<T>::rotateLeft(Node<T>** critN) {
+void AVL<T>::rotateLeft(Node<T>** cn) {
     /*if(critN==0) {
 	  critN=&root;
     }
     else {*/
 	  //critN=&root;
-	  Node<T>* tempRightChild = *critN;
+	  Node<T>* tempRightChild = *cn;
 	  //*critN = tempRightChild->getRightChild();
 	  Node<T>* tempLeftChild = tempRightChild->getLeftChild();
     
-	  *critN = tempRightChild->getRightChild();
+	  *cn = tempRightChild->getRightChild();
 	  //tempRightChild->getRightChild();
 	  //(tempRightChild)->setLeftChild(**critN);
-	  (*critN)->setLeftChild(*tempRightChild);
+	  (*cn)->setLeftChild(*tempRightChild);
 	  tempRightChild->setRightChild(*tempLeftChild);
     //}
 }
 
 template <typename T>
-void AVL<T>::rotateRight(Node<T>** critN) {
+void AVL<T>::rotateRight(Node<T>** cn) {
     /*if(critN==0) {
 	  critN=&root;
     }
     else {*/
 	  //critN=&root;
-	  Node<T>* tempLeftChild = *critN;
+	  Node<T>* tempLeftChild = *cn;
 	  //*critN = tempLeftChild->getLeftChild();
 	  Node<T>* tempRightChild = tempLeftChild->getRightChild();
     
-	  *critN = tempLeftChild->getLeftChild();
+	  *cn = tempLeftChild->getLeftChild();
 	  //tempLeftChild->getLeftChild();
 	  //(tempLeftChild)->setRightChild(**critN);
-	  (*critN)->setRightChild(*tempLeftChild);
+	  (*cn)->setRightChild(*tempLeftChild);
 	  tempLeftChild->setLeftChild(*tempRightChild);
     //}
 }
@@ -281,7 +281,36 @@ void AVL<T>::remove(T v) {
 	  delete nodeToRemove; 
     }
 }
+/*
+template <typename T>
+void AVL<T>::inOrderTraversal() {
+  inOrderTraversalPrint(root);
+}
 
+template <typename T>
+void AVL<T>::traversalPrint(Node<T>* root) {
+  if(root != 0) {
+    inOrderTraversalPrint(root->getLeftChild());
+    //std::cout << root->getBalance() << std::endl;
+    std::cout << root->getValue() << std::endl;
+    traversalPrint(root->getRightChild());
+  }
+}*/
+/*
+template <typename T>
+void AVL<T>::postOrderTraversal() {
+  postTraversalPrint(root);
+}
+
+template <typename T>
+void AVL<T>::postTraversalPrint(Node<T>* root) {
+  if(root != 0) {
+    traversalPrint(root->getLeftChild());
+    traversalPrint(root->getRightChild());
+    //std::cout << root->getBalance() << std::endl;
+    //std::cout << root->getValue() << std::endl;
+  }
+}*/
 template <typename T>
 void AVL<T>::print() {
   traversalPrint(root);
