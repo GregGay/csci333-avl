@@ -139,7 +139,6 @@ void AVL<T>::insert(T v) {
 	  }
     }
 
-    //cout << "R:" << (*R)->getValue() <<endl;
     int d = 0;
     while ((*R) != 0 && (*R)->getValue() != v) {
 	  if (v < (*R)->getValue()) {
