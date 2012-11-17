@@ -16,13 +16,18 @@ int main() {
   avl->insert(3);
   avl->insert(7);
   avl->insert(1);
+  avl->insert(17);
+  avl->insert(16);
+  avl->insert(5);
   avl->print();
-  /*cout << endl;
+  cout << endl;
+/*
   cout << "Post Order Traversal" << endl;
   avl->postOrderTraversal();
   cout << endl;
+  
   cout << "In Order Traversal" << endl;
-  avl->inOrderTraversal();*/
+  avl->inOrderTraversal();
   cout << endl;
-  cout << "End of Insert" << endl;
+  cout << "End!" << endl;*/
 }
