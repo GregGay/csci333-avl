@@ -56,8 +56,8 @@ void AVL<T>::insert(T v) {
     *curr = temp;
   
     Node<T>** R;
-    Node<T>** C = 0;
-    Node<T>** B = 0;
+    Node<T>** C;
+    Node<T>** B;
     int d1 = 0;
     int d2 = 0;
     int d3 = 0;
