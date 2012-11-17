@@ -11,9 +11,9 @@ int main() {
   cout << endl;
   avl->insert(1);
   avl->insert(2);
-  avl->insert(3);
   avl->insert(4);
   avl->insert(7);
+  avl->insert(8);
   avl->print();
   /*cout << endl;
   cout << "Post Order Traversal" << endl;
