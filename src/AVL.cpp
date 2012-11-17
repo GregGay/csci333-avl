@@ -175,12 +175,15 @@ void AVL<T>::rotateRight(Node<T>** cn) {
 template <typename T>
 void AVL<T>::remove(T v) {
     Node<T>** cur=&root;
+    std::list< Node<T>* > list;
     while(*cur != 0 && (*cur)->getValue() != v){
 	  if (v < (*cur)->getValue()) {
 		cur=&((*cur)->getLeftChild());
+		list.push_back(*cur);
 	  }
 	  else {
 		cur=&((*cur)->getRightChild());
+		list.push_back(*cur);
 	  }
     }
     
@@ -213,8 +216,102 @@ void AVL<T>::remove(T v) {
 		*cur=(*cur)->getRightChild();
 	  }
 
-	  delete nodeToRemove; 
+	  delete nodeToRemove;
     }
+    
+    //Delete doesn't work correctly, I made an attempt but ran out of time 
+    /*
+    Node<T>** R;
+    Node<T>** C;
+    Node<T>** B;
+    int d1 = 0;
+    int d2 = 0;
+    int d3 = 0;
+
+    while (list.front()!=0) {
+	  if (v < (*cur)->getValue()) {
+		d1 = -1;
+		C = &((*cur)->getLeftChild());
+	  }
+	  else if (v > (*cur)->getValue()) {
+		d1 = 1;
+		C = &((*cur)->getRightChild());
+	  }
+
+	  if ((*cur)->getBalance()!=d1) {
+		(*cur)->setBalance(0);
+		R = cur;
+	  }
+
+	  else {
+		if (v < (*C)->getValue()) {
+		    d2 = -1;
+		    B = &((*C)->getLeftChild());
+		}
+		else if ( v > (*C)->getValue()) {
+		    d2 = 1;
+		    B = &((*C)->getRightChild());
+		}
+
+		if (d2 == d1) {
+		    (*cur)->setBalance(0);
+		    R = B;
+		    if (d1 == -1) {
+			  rotateRight(cur);
+		    }
+		    else if (d1 == 1) {
+			  rotateLeft(cur);
+		    }
+		}
+		
+		else {
+		    if (v < (*B)->getValue()) {
+			  d3 = -1;
+			  R = &((*B)->getLeftChild());
+		    }
+		    else if (v > (*B)->getValue()) {
+			  d3 = 1;
+			  R = &((*B)->getRightChild());
+		    }
+
+		    if (d3==d2) {
+			  (*cur)->setBalance(0);
+			  (*C)->setBalance(d1);
+		    }
+		    else if (d3 == -d2) {
+			  (*cur)->setBalance(d2);
+		    }
+		    else {
+			  (*cur)->setBalance(0);
+		    }
+		    if (d2 == 1) {
+			  rotateLeft(C);
+		    }
+		    else if (d2==-1) {
+			  rotateRight(C);
+		    }
+		    if (d1==1) {
+			  rotateLeft(cur);
+		    }
+		    else if (d1==-1) {
+			  rotateRight(cur);
+		    }
+		}
+	  }
+    }
+    int d = 0;
+    while ((*R) != 0 && (*R)->getValue() != v) {
+	  if (v < (*R)->getValue()) {
+		d = -1;
+		(*R)->setBalance(-1);
+		R = &((*R)->getLeftChild());
+	  }
+	  else if (v > (*R)->getValue()) {
+		d = 1;
+		(*R)->setBalance(1);
+		R = &((*R)->getRightChild());
+	  }
+    }*/
 }
 
 template <typename T>
